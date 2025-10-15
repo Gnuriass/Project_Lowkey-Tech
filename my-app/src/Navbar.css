@@ -1,0 +1,91 @@
+/* 🎨 ธีมปกติ */
+
+.navbar-dark {
+  background-color: #333 !important;
+  color: #ffff !important;
+}
+.navbar-light {
+  background-color: #fac204 !important;
+  color: #000 !important;
+}
+
+/* 🔍 สไตล์ช่องค้นหา */
+.search-box {
+  border-radius: 50px;
+  overflow: hidden;
+  background-color: white;
+}
+.search-box input {
+  border: none;
+  border-radius: 50px;
+  padding: 10px 15px;
+  color: #333;
+}
+.search-button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
+/* 🌙 ปุ่ม Dark Mode */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #eee;
+  transition: background-color 0.3s, color 0.3s;
+  color: #000; /* ค่าเริ่มต้นเป็นสีดำ */
+}
+.toggle-container:hover {
+  background-color: #ddd;
+}
+.toggle-switch {
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+.toggle-switch.active {
+  background-color: #222;
+}
+.toggle-dot {
+  width: 15px;
+  height: 15px;
+  background-color: #222;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  transition: left 0.3s, background-color 0.3s;
+}
+.toggle-switch.active .toggle-dot {
+  left: 20px;
+  background-color: #e6531a;
+}
+
+/* 🌙 ธีม Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #fff;
+}
+
+/* 🌙 เปลี่ยนสีของ toggle ในโหมดมืด */
+body.dark-mode .toggle-container {
+  background-color: #444;
+  color: #fff; /* เปลี่ยนสีข้อความเป็นสีขาว */
+}
+body.dark-mode .toggle-container:hover {
+  background-color: #555;
+}
+.navbar-gradient {
+  background: linear-gradient(0deg, #fac240, #f7a800);
+}
+
+
