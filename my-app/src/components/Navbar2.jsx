@@ -1,41 +1,40 @@
-import { useState, useEffect} from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Nav,
   Form,
   FormControl,
+  NavDropdown,
   Container,
   InputGroup,
 } from "react-bootstrap";
 import "../Navbar.css";
 import logo from "../image/logo.png";
 import search from "../image/search.png";
+import us from "../image/us.png";
 import sun from "../image/sun.png";
 import moon from "../image/moon.png";
+import UserContext from "../context/UserContext";
 
-function NavBarComponent() {
+function NavBarComponent2() {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   const [query, setQuery] = useState("");
 
-  // Dark mode
+  // 🌙 Dark mode toggle
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("darkMode") === "true";
   });
 
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-    }
+    document.body.classList.toggle("dark-mode", darkMode);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
+  // 🔍 Search
   const handleSearch = (e) => {
     e.preventDefault();
     const lowerQuery = query.toLowerCase().trim();
@@ -46,9 +45,18 @@ function NavBarComponent() {
     navigate(`/search?query=${lowerQuery}`);
     setQuery("");
   };
+
+  // 🏠 คลิกโลโก้ → ไปหน้าแรก home2 + scroll top
   const handleLogoClick = () => {
-    navigate("/home");
-    window.scrollTo({ top: 0, behavior: "smooth" }); // ✅ เลื่อนไปบนสุดแบบนุ่มนวล
+    navigate("/home2");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // 🚪 ออกจากระบบ → เคลียร์ user + กลับ home (Navbar ปกติ)
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/home"); // กลับหน้าแรกแบบ Navbar ปกติ
   };
 
   return (
@@ -57,18 +65,16 @@ function NavBarComponent() {
         fluid
         className="d-flex align-items-center justify-content-between w-100"
       >
-        {/* Logo */}
-        <div className="d-flex align-items-center gap-2 ms-5">
-          <div
-            onClick={handleLogoClick}
-            className="d-flex align-items-center gap-2 text-decoration-none"
-            style={{ color: "inherit", cursor: "pointer" }}
-          >
-            <img src={logo} alt="Logo" width="45" height="45" />
-          </div>
+        {/* ✅ Logo คลิกได้ */}
+        <div
+          className="d-flex align-items-center gap-2 ms-5"
+          onClick={handleLogoClick}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={logo} alt="Logo" width="45" height="45" />
         </div>
 
-        {/* Search */}
+        {/* 🔍 Search */}
         <Form className="flex-grow-1 mx-3" onSubmit={handleSearch}>
           <InputGroup
             style={{
@@ -105,11 +111,11 @@ function NavBarComponent() {
           </InputGroup>
         </Form>
 
-        {/* เมนู + dark mode + login */}
+        {/* 📑 เมนูหลัก + 🌙 Dark mode + 👤 โปรไฟล์ */}
         <div className="d-flex align-items-center gap-4">
+          {/* เมนู */}
           <Nav className="d-flex gap-3">
-            <Nav.Link as={Link} to="/home" className="text-dark" onClick={handleLogoClick}>
-            
+            <Nav.Link as={Link} to="/home2" className="text-dark" onClick={handleLogoClick}>
               หน้าแรก
             </Nav.Link>
             <Nav.Link as={Link} to="/courseonline" className="text-dark">
@@ -121,10 +127,9 @@ function NavBarComponent() {
             <Nav.Link as={Link} to="/courses" className="text-dark">
               คอร์สแนะนำ
             </Nav.Link>
-
           </Nav>
 
-          {/* Dark mode */}
+          {/* 🌙 Dark mode switch */}
           <div className="d-flex align-items-center gap-2">
             <img
               src={darkMode ? sun : moon}
@@ -161,19 +166,25 @@ function NavBarComponent() {
             </div>
           </div>
 
-          
-            <div className="d-flex gap-2">
-              <Link to="/login" className="btn btn-outline-primary">
-                Login
-              </Link>
-              <Link to="/signup" className="btn btn-primary">
-                Signup
-              </Link>
-            </div>
+          {/* 👤 โปรไฟล์ */}
+          <NavDropdown
+            title={<img src={us} alt="User Icon" width="35" height="35" />}
+            id="user-dropdown"
+            align="end"
+            className="no-caret"
+          >
+            <NavDropdown.Item as={Link} to="/profile">
+              โปรไฟล์ของฉัน
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={handleLogout} className="text-danger">
+              ออกจากระบบ
+            </NavDropdown.Item>
+          </NavDropdown>
         </div>
       </Container>
     </Navbar>
   );
 }
 
-export default NavBarComponent;
+export default NavBarComponent2;
