@@ -27,9 +27,9 @@ db.connect((err) => {
 
 // Signup (plain text)
 app.post("/signup", async (req, res) => {
-  const { username, lastname, email, password, gender, province, age } = req.body;
+  const { username, lastname, email, password, career, gender, province, age } = req.body;
 
-  if (!username || !lastname || !email || !password || !gender || !province || !age) {
+  if (!username || !lastname || !email || !career || !password || !gender || !province || !age) {
     return res.status(400).json({ success: false, message: "กรุณากรอกข้อมูลให้ครบ" });
   }
 
@@ -44,14 +44,15 @@ app.post("/signup", async (req, res) => {
     }
 
     const sql = `
-      INSERT INTO users (username, lastname, email, password, gender, province, age)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO users (username, lastname, email, password, career, gender, province, age)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
     await db.promise().query(sql, [
       username,
       lastname,
       email,
       password,
+      career,
       gender,
       province,
       age
@@ -97,7 +98,7 @@ app.post("/login", async (req, res) => {
 
 // ดึงข้อมูลผู้ใช้ทั้งหมด (ไม่เอารหัสผ่าน)
 app.get("/users", (req, res) => {
-  const sql = "SELECT id, username, lastname, email, gender, province, age FROM users";
+  const sql = "SELECT id, username, lastname, email, career, gender, province, age FROM users";
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ message: "เกิดข้อผิดพลาด", error: err });
     res.json(results);
