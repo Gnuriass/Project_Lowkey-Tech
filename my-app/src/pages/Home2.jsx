@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
@@ -249,7 +249,7 @@ function Home() {
         {/* ปุ่มสมัครเรียนตอนนี้ (แสดงเฉพาะยังไม่ login) */}
         {!isLoggedIn && (
           <div className="text-center mt-4">
-            <Link to="/signup">
+            <Link to="/courses">
               <Button
                 style={{
                   backgroundColor: "#E6531A",
@@ -258,7 +258,7 @@ function Home() {
                 }}
                 size="lg"
               >
-                สมัครเรียนตอนนี้
+                ดูเพิ่มเติม
               </Button>
             </Link>
           </div>
