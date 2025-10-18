@@ -37,197 +37,190 @@ function Onsite() {
 
   return (
     <div
-      className="home-page d-flex"
+      className="d-flex flex-column"
       style={{
+        minHeight: "100vh",
         backgroundColor: "#fafafa",
-        minHeight: "100vh", // ✅ ให้เต็มจอแนวตั้ง
       }}
     >
-      {/* Sidebar */}
-      <div
-        className="sidebar p-4"
-        style={{
-          width: "250px",
-          backgroundColor: "#fff",
-          borderRight: "1px solid #eee",
-          height: "100vh",
-          overflowY: "auto",
-          position: "sticky",
-          top: 0,
-        }}
-      >
-        <h3
-          className="text-center mb-4"
-          style={{ color: "#E6531A", fontWeight: "bold" }}
+      {/* 🔹 ส่วนหลัก (Sidebar + Content) */}
+      <div className="d-flex flex-grow-1">
+        {/* Sidebar */}
+        <div
+          className="sidebar p-4 d-flex flex-column"
+          style={{
+            width: "250px",
+            backgroundColor: "#fff",
+            borderRight: "1px solid #eee",
+          }}
         >
-          หมวดหมู่
-        </h3>
-        <ul
-          className="nav flex-column"
-          style={{ fontSize: "1.05rem", listStyle: "none", paddingLeft: 0 }}
-        >
-          {categories.map((cat, index) => (
-            <li
-              key={index}
-              className="nav-item d-flex align-items-center mb-3 p-2 rounded"
-              style={{
-                cursor: "pointer",
-                transition: "0.2s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#FFF3E0")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "transparent")
-              }
-            >
-              <span
-                style={{
-                  color: "#E6531A",
-                  fontSize: "1.3rem",
-                  marginRight: "10px",
-                }}
-              >
-                {cat.icon}
-              </span>
-              <span>{cat.name}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-auto text-center">
-          <Button
-            variant="warning"
-            className="w-100 mt-3 fw-bold"
-            style={{
-              backgroundColor: "#E6531A",
-              border: "none",
-              color: "white",
-            }}
+          <h3
+            className="text-center mb-4"
+            style={{ color: "#E6531A", fontWeight: "bold" }}
           >
-            Upgrade to PRO
-          </Button>
+            หมวดหมู่
+          </h3>
+
+          <ul
+            className="nav flex-column flex-grow-1"
+            style={{ fontSize: "1.05rem", listStyle: "none", paddingLeft: 0 }}
+          >
+            {categories.map((cat, index) => (
+              <li
+                key={index}
+                className="nav-item d-flex align-items-center mb-3 p-2 rounded"
+                style={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#FFF3E0")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
+              >
+                <span
+                  style={{
+                    color: "#E6531A",
+                    fontSize: "1.3rem",
+                    marginRight: "10px",
+                  }}
+                >
+                  {cat.icon}
+                </span>
+                <span>{cat.name}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="text-center">
+            <Button
+              variant="warning"
+              className="w-100 fw-bold"
+              style={{
+                backgroundColor: "#E6531A",
+                border: "none",
+                color: "white",
+              }}
+            >
+              Upgrade to PRO
+            </Button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="content flex-grow-1 p-4 d-flex flex-column">
+          <div className="flex-grow-1">
+            {/* 🔸 หลักสูตร Onsite */}
+            <section className="mb-4">
+              <h5 className="fw-bold mb-3">หลักสูตร Onsite</h5>
+              <Row className="mb-4">
+                <Col md={6} className="mb-3">
+                  <Card className="shadow-sm h-100">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>วิธีแตะ/ปัด/พิมพ์บนหน้าจอ</Card.Title>
+                      <Card.Text>฿390</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Card className="shadow-sm h-100">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>สั่งอาหารผ่าน Grab / LINE MAN</Card.Title>
+                      <Card.Text>฿400</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Card className="shadow-sm h-100">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>ลงทะเบียนรับเงินผู้สูงอายุ</Card.Title>
+                      <Card.Text>฿350</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Card className="shadow-sm h-100">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>การจัดการไฟล์ / รูปภาพในเครื่อง</Card.Title>
+                      <Card.Text>฿420</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </section>
+
+            {/* 🔸 คอร์สใหม่ */}
+            <section className="mb-4">
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="fw-bold">คอร์สใหม่</h5>
+                <Link to="/classes/popular">ดูทั้งหมด</Link>
+              </div>
+              <Row>
+                <Col md={6}>
+                  <Card className="mb-3">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>สมัครดู Netflix, YouTube Premium</Card.Title>
+                      <Card.Text>฿300</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={6}>
+                  <Card className="mb-3">
+                    <Card.Img
+                      variant="top"
+                      src={c}
+                      height="200"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>ใช้อีเมล (สมัคร / อ่าน / ส่ง)</Card.Title>
+                      <Card.Text>฿400</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </section>
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div
-        className="content flex-grow-1 d-flex flex-column"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <div className="flex-grow-1 p-4">
-          {/* Recent Search */}
-          <section className="mb-4">
-            <h5 className="fw-bold mb-3">หลักสูตร Onsite</h5>
-            <Row className="mb-4">
-              <Col md={6} className="mb-3">
-                <Card className="shadow-sm h-100">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>วิธีแตะ/ปัด/พิมพ์บนหน้าจอ</Card.Title>
-                    <Card.Text>฿390</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Card className="shadow-sm h-100">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>สั่งอาหารผ่าน Grab / LINE MAN</Card.Title>
-                    <Card.Text>฿400</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={6} className="mb-3">
-                <Card className="shadow-sm h-100">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>ลงทะเบียนรับเงินผู้สูงอายุ</Card.Title>
-                    <Card.Text>฿350</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Card className="shadow-sm h-100">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>การจัดการไฟล์ / รูปภาพในเครื่อง</Card.Title>
-                    <Card.Text>฿420</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </section>
-
-          {/* Popular Class */}
-          <section className="mb-4">
-            <div className="d-flex justify-content-between align-items-center">
-              <h5 className="fw-bold">คอร์สใหม่</h5>
-              <Link to="/classes/popular">ดูทั้งหมด</Link>
-            </div>
-            <Row>
-              <Col md={6}>
-                <Card className="mb-3">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>สมัครดู Netflix, YouTube Premium</Card.Title>
-                    <Card.Text>฿300</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={6}>
-                <Card className="mb-3">
-                  <Card.Img
-                    variant="top"
-                    src={c}
-                    height="200"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>ใช้อีเมล (สมัคร / อ่าน / ส่ง)</Card.Title>
-                    <Card.Text>฿400</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </section>
-        </div>
-
-        {/* ✅ Footer อยู่ล่างสุด */}
-        <Footer />
-      </div>
+      {/* ✅ Footer อยู่ล่างสุดเต็มความกว้าง */}
+      <Footer />
     </div>
   );
 }
