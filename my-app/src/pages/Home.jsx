@@ -25,7 +25,7 @@ function Home() {
           textAlign: "center",
         }}
       >
-        <h1 className="fw-bold">เปิดประตูสู่โลกดิจิทัล ใช้ชีวิตให้ง่ายขึ้น</h1>
+        <h1 className="fw-bold">เปิดประตูสู่โลกดิจิทัล ให้ชีวิตง่ายขึ้น</h1>
         <p style={{ fontSize: "1.5rem" }}>
           เรียน การสื่อสารออนไลน์, ใช้งานบริการออนไลน์ และอีกมากมาย
           ครอบคลุมทุกพื้นฐานการใช้ชีวิตในโลกดิจิทัล
@@ -183,68 +183,126 @@ function Home() {
       <Container className="py-5">
         <h2 className="text-center mb-4">คอร์สนิยม</h2>
         <Row className="mb-4">
-          {/* แถว 1 */}
-          <Col md={6} className="mb-3">
-            <Card className="shadow-sm h-100">
-              <Card.Img
-                variant="top"
-                src={a}
-                height="200"
-                style={{ objectFit: "cover" }}
-              />
-              <Card.Body>
-                <Card.Title>พื้นฐานดิจิทัล</Card.Title>
-                <Card.Text>฿390</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={6} className="mb-3">
-            <Card className="shadow-sm h-100">
-              <Card.Img
-                variant="top"
-                src={a}
-                height="200"
-                style={{ objectFit: "cover" }}
-              />
-              <Card.Body>
-                <Card.Title>การสื่อสารออนไลน์</Card.Title>
-                <Card.Text>฿400</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* แถว 2 */}
-          <Col md={6} className="mb-3">
-            <Card className="shadow-sm h-100">
-              <Card.Img
-                variant="top"
-                src={a}
-                height="200"
-                style={{ objectFit: "cover" }}
-              />
-              <Card.Body>
-                <Card.Title>การใช้งานโซเชียลมีเดีย</Card.Title>
-                <Card.Text>฿350</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={6} className="mb-3">
-            <Card className="shadow-sm h-100">
-              <Card.Img
-                variant="top"
-                src={a}
-                height="200"
-                style={{ objectFit: "cover" }}
-              />
-              <Card.Body>
-                <Card.Title>การชำระเงินออนไลน์</Card.Title>
-                <Card.Text>฿420</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+                  {/* แถว 1 */}
+                  <Col md={6} className="mb-3">
+                    <Card className="shadow-sm h-100">
+                      <Card.Img
+                        variant="top"
+                        src={a}
+                        height="200"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">พื้นฐานดิจิทัล</span>
+                          <Link to="/courses">
+                          <button
+                            style={{
+                              backgroundColor: "#E6531A",
+                              borderColor: "#E6531A",
+                              color: "#fff",
+                            }}
+                            className="btn btn-sm"
+                          >
+                            ดูเพิ่มเติม
+                          </button>
+                          </Link>
+                        </div>
+                        <Card.Text className="mt-2">฿390</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+        
+                  <Col md={6} className="mb-3">
+                    <Card className="shadow-sm h-100">
+                      <Card.Img
+                        variant="top"
+                        src={a}
+                        height="200"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">การสื่อสารออนไลน์</span>
+                          <Link to="/courses">
+                          <button
+                            style={{
+                              backgroundColor: "#E6531A",
+                              borderColor: "#E6531A",
+                              color: "#fff",
+                            }}
+                            className="btn btn-sm"
+                          >
+                            ดูเพิ่มเติม
+                            
+                          </button>
+                          </Link>
+                        </div>
+                        <Card.Text className="mt-2">฿400</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+        
+                <Row>
+                  {/* แถว 2 */}
+                  <Col md={6} className="mb-3">
+                    <Card className="shadow-sm h-100">
+                      <Card.Img
+                        variant="top"
+                        src={a}
+                        height="200"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">การใช้งานโซเชียลมีเดีย</span>
+                          <Link to="/courses">
+                          <button
+                            style={{
+                              backgroundColor: "#E6531A",
+                              borderColor: "#E6531A",
+                              color: "#fff",
+                            }}
+                            className="btn btn-sm"
+                          >
+                            ดูเพิ่มเติม
+                          </button>
+                          </Link>
+                        </div>
+                        <Card.Text className="mt-2">฿350</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <Card className="shadow-sm h-100">
+                      <Card.Img
+                        variant="top"
+                        src={a}
+                        height="200"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">การชำระเงินออนไลน์</span>
+                          <Link to="/courses">
+                          <button
+                            style={{
+                              backgroundColor: "#E6531A",
+                              borderColor: "#E6531A",
+                              color: "#fff",
+                            }}
+                            className="btn btn-sm"
+                          >
+                            ดูเพิ่มเติม
+                          </button>
+                          </Link>
+                        </div>
+                        <Card.Text className="mt-2">฿420</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
 
         {/* ปุ่มสมัครเรียนตอนนี้ (แสดงเฉพาะยังไม่ login) */}
         {!isLoggedIn && (
