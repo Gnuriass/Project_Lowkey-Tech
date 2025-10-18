@@ -1,69 +1,68 @@
-import React, { useState, useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Home2 from "./pages/Home2";
 import Signup from "./pages/Signup";
-import Welcome from "./pages/Login";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Courses from "./pages/Courses";
 import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
 import Online from "./pages/Online";
 import Onsite from "./pages/Onsite";
-import UserContext from "./context/UserContext";
+
 import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
-import Courses from "./pages/Courses";
-import Profile from "./pages/Profile";
+import { UserProvider, default as UserContext } from "./context/UserContext";
 
 function Layout() {
   const location = useLocation();
   const { user } = useContext(UserContext);
 
-  // 🔸 หน้าไหนไม่ต้องโชว์ Navbar
-  const hideNavbar = ["/signup", "/login"].includes(location.pathname);
+  // ไม่แสดง Navbar ที่หน้า login และ signup
+  const hideNavbar = ["/login", "/signup"].includes(location.pathname);
+
+  let NavbarToShow = null;
+  if (!hideNavbar) {
+    if (location.pathname === "/home2" && user) {
+      NavbarToShow = <Navbar2 />;
+    } else {
+      NavbarToShow = <Navbar />;
+    }
+  }
 
   return (
     <>
-      {!hideNavbar && (user ? <Navbar2 /> : <Navbar />)}
+      {NavbarToShow}
 
-      <Routes>
-        <Route path="/login" element={<Welcome />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="*"
-          element={
-            <div style={{ paddingTop: "60px" }}>
-              <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/home2" element={<Home2 />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/courseonline" element={<Online />} />
-                <Route path="/courseonsite" element={<Onsite />} />
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/profile" element={<Profile />} />
-
-              </Routes>
-            </div>
-          }
-        />
-      </Routes>
+      <div style={{ paddingTop: "60px" }}>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/home2" element={user ? <Home2 /> : <Navigate to="/login" replace />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" replace />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/courseonline" element={<Online />} />
+          <Route path="/courseonsite" element={<Onsite />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </div>
     </>
   );
 }
 
 function App() {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null // ✅ ดึงค่าจาก localStorage ถ้ามี
-  );
-
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserProvider>
       <Router>
         <Layout />
       </Router>
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 

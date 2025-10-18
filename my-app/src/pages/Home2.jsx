@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import { FaHistory, FaEye, FaBullseye } from "react-icons/fa"; // import icon
 import a from "../image/a.jpg";
 
-function Home() {
+function Home2() {
   // สมมติว่าดึงค่าจาก global state / localStorage
   const [isLoggedIn] = useState(false);
 
@@ -278,4 +278,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Home2;

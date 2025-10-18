@@ -1,5 +1,5 @@
-import { useState, useEffect} from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -7,15 +7,19 @@ import {
   FormControl,
   Container,
   InputGroup,
+  NavDropdown,
 } from "react-bootstrap";
 import "../Navbar.css";
 import logo from "../image/logo.png";
 import search from "../image/search.png";
 import sun from "../image/sun.png";
 import moon from "../image/moon.png";
+import us from "../image/us.png";
+import UserContext from "../context/UserContext";
 
-function NavBarComponent() {
+function NavBar() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
   const [query, setQuery] = useState("");
 
   // Dark mode
@@ -32,9 +36,7 @@ function NavBarComponent() {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -46,26 +48,25 @@ function NavBarComponent() {
     navigate(`/search?query=${lowerQuery}`);
     setQuery("");
   };
+
   const handleLogoClick = () => {
+    const path = user ? "/home2" : "/home"; // ถ้า login → home2
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
     navigate("/home");
-    window.scrollTo({ top: 0, behavior: "smooth" }); // ✅ เลื่อนไปบนสุดแบบนุ่มนวล
   };
 
   return (
     <Navbar expand="lg" fixed="top" className="bg-warning">
-      <Container
-        fluid
-        className="d-flex align-items-center justify-content-between w-100"
-      >
+      <Container fluid className="d-flex align-items-center justify-content-between w-100">
         {/* Logo */}
-        <div className="d-flex align-items-center gap-2 ms-5">
-          <div
-            onClick={handleLogoClick}
-            className="d-flex align-items-center gap-2 text-decoration-none"
-            style={{ color: "inherit", cursor: "pointer" }}
-          >
-            <img src={logo} alt="Logo" width="45" height="45" />
-          </div>
+        <div className="d-flex align-items-center gap-2 ms-5" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+          <img src={logo} alt="Logo" width="45" height="45" />
         </div>
 
         {/* Search */}
@@ -105,11 +106,10 @@ function NavBarComponent() {
           </InputGroup>
         </Form>
 
-        {/* เมนู + dark mode + login */}
+        {/* เมนูหลัก */}
         <div className="d-flex align-items-center gap-4">
           <Nav className="d-flex gap-3">
-            <Nav.Link as={Link} to="/home" className="text-dark" onClick={handleLogoClick}>
-            
+            <Nav.Link as={Link} to={user ? "/home2" : "/home"} className="text-dark" onClick={handleLogoClick}>
               หน้าแรก
             </Nav.Link>
             <Nav.Link as={Link} to="/courseonline" className="text-dark">
@@ -121,7 +121,6 @@ function NavBarComponent() {
             <Nav.Link as={Link} to="/courses" className="text-dark">
               คอร์สแนะนำ
             </Nav.Link>
-
           </Nav>
 
           {/* Dark mode */}
@@ -161,7 +160,23 @@ function NavBarComponent() {
             </div>
           </div>
 
-          
+          {/* Login / Profile */}
+          {user ? (
+            <NavDropdown
+              title={<img src={us} alt="User Icon" width="35" height="35" />}
+              id="user-dropdown"
+              align="end"
+              className="no-caret"
+            >
+              <NavDropdown.Item as={Link} to="/profile">
+                โปรไฟล์ของฉัน
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={handleLogout} className="text-danger">
+                ออกจากระบบ
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
             <div className="d-flex gap-2">
               <Link to="/login" className="btn btn-outline-primary">
                 Login
@@ -170,10 +185,11 @@ function NavBarComponent() {
                 Signup
               </Link>
             </div>
+          )}
         </div>
       </Container>
     </Navbar>
   );
 }
 
-export default NavBarComponent;
+export default NavBar;

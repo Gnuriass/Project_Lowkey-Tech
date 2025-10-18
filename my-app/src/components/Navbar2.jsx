@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Button } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
@@ -17,24 +17,33 @@ import sun from "../image/sun.png";
 import moon from "../image/moon.png";
 import UserContext from "../context/UserContext";
 
-function NavBarComponent2() {
+function NavBar2() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext); // ใช้ Context
   const [query, setQuery] = useState("");
 
   // 🌙 Dark mode toggle
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true";
-  });
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
+  // ตรวจสอบ user ถ้าไม่มี → กลับหน้า home
+  useEffect(() => {
+    if (!user) {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        setUser(storedUser);
+      } else {
+        navigate("/home");
+      }
+    }
+  }, [user, navigate, setUser]);
+
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  // 🔍 Search
   const handleSearch = (e) => {
     e.preventDefault();
     const lowerQuery = query.toLowerCase().trim();
@@ -46,35 +55,26 @@ function NavBarComponent2() {
     setQuery("");
   };
 
-  // 🏠 คลิกโลโก้ → ไปหน้าแรก home2 + scroll top
   const handleLogoClick = () => {
     navigate("/home2");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 🚪 ออกจากระบบ → เคลียร์ user + กลับ home (Navbar ปกติ)
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/home"); // กลับหน้าแรกแบบ Navbar ปกติ
+    navigate("/home");
   };
 
   return (
     <Navbar expand="lg" fixed="top" className="bg-warning">
-      <Container
-        fluid
-        className="d-flex align-items-center justify-content-between w-100"
-      >
-        {/* ✅ Logo คลิกได้ */}
-        <div
-          className="d-flex align-items-center gap-2 ms-5"
-          onClick={handleLogoClick}
-          style={{ cursor: "pointer" }}
-        >
+      <Container fluid className="d-flex align-items-center justify-content-between w-100">
+        {/* Logo */}
+        <div className="d-flex align-items-center gap-2 ms-5" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
           <img src={logo} alt="Logo" width="45" height="45" />
         </div>
 
-        {/* 🔍 Search */}
+        {/* Search */}
         <Form className="flex-grow-1 mx-3" onSubmit={handleSearch}>
           <InputGroup
             style={{
@@ -111,9 +111,8 @@ function NavBarComponent2() {
           </InputGroup>
         </Form>
 
-        {/* 📑 เมนูหลัก + 🌙 Dark mode + 👤 โปรไฟล์ */}
+        {/* เมนู + Dark mode + Profile */}
         <div className="d-flex align-items-center gap-4">
-          {/* เมนู */}
           <Nav className="d-flex gap-3">
             <Nav.Link as={Link} to="/home2" className="text-dark" onClick={handleLogoClick}>
               หน้าแรก
@@ -129,7 +128,7 @@ function NavBarComponent2() {
             </Nav.Link>
           </Nav>
 
-          {/* 🌙 Dark mode switch */}
+          {/* Dark mode */}
           <div className="d-flex align-items-center gap-2">
             <img
               src={darkMode ? sun : moon}
@@ -162,29 +161,35 @@ function NavBarComponent2() {
                   marginLeft: darkMode ? "auto" : "0",
                   transition: "0.3s",
                 }}
-              ></div>
+              />
             </div>
           </div>
 
-          {/* 👤 โปรไฟล์ */}
-          <NavDropdown
-            title={<img src={us} alt="User Icon" width="35" height="35" />}
-            id="user-dropdown"
-            align="end"
-            className="no-caret"
-          >
-            <NavDropdown.Item as={Link} to="/profile">
-              โปรไฟล์ของฉัน
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={handleLogout} className="text-danger">
-              ออกจากระบบ
-            </NavDropdown.Item>
-          </NavDropdown>
+          {/* Profile dropdown */}
+          {user ? (
+            <NavDropdown
+              title={<img src={us} alt="User Icon" width="35" height="35" />}
+              id="user-dropdown"
+              align="end"
+              className="no-caret"
+            >
+              <NavDropdown.Item as={Link} to="/profile">
+                โปรไฟล์ของฉัน
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={handleLogout} className="text-danger">
+                ออกจากระบบ
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <Button variant="outline-dark" onClick={() => navigate("/login")}>
+              เข้าสู่ระบบ
+            </Button>
+          )}
         </div>
       </Container>
     </Navbar>
   );
 }
 
-export default NavBarComponent2;
+export default NavBar2;
